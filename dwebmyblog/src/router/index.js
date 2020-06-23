@@ -1,14 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+// import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
   const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'Django',
+    component: () => import('../views/django.vue')
+  
+  },
+  {
+    path: '/vuecli',
+    name: 'VueCli',
+    component: () => import('../views/vuecli.vue')
+  
   },
   {
     path: '/about',
@@ -25,3 +32,5 @@ const router = new VueRouter({
 })
 
 export default router
+
+
