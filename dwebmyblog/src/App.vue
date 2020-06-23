@@ -12,18 +12,17 @@
           <div class="item" style="background: #777; color:#fff">
             <router-link to="/" style="color:#fff">Django框架</router-link>
           </div>
-        </div>
-        <div class="menu">
+        
+        
           <div class="item">
             <router-link to="/vuecli" >VueCli</router-link>
           </div>
-        </div>
-        <div class="menu">
+        
+        
           <div class="item">
             <a>实战博客</a>
           </div>
-        </div>
-        <div class="menu">
+        
           <div class="item">
             <a>项目部署</a>
           </div>
