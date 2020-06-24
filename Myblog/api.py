@@ -38,3 +38,18 @@ def api_test(request):
         data['classes'].append(data_item)
     # data = json.dumps(data)
     return Response(data)
+
+@api_view(['GET'])
+def getMenuList(request):
+    allClasses = Classes.objects.all()
+
+    #整理数据为Json
+    data = []
+    for c in allClasses:
+        #设计单条数据的结构
+        data_item = {
+            'id':c.id,
+            'text':c.text
+        }
+        data.append(data_item)
+    return Response(data)

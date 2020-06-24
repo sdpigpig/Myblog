@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 export default {
     data(){
         return{
@@ -25,20 +25,9 @@ export default {
     },
     //用户在看到网页之前,最后Vue提供的一次函数执行
     mounted() {
-        this.getData()
     },
     methods: {
-        getData(){
-            axios({
-                url:'http://127.0.0.1:9000/api/',
-                type:'json',
-                method:'get'
-            }).then((res)=>{
-                console.log(res)
-                // this.imglist = res.data.newsdata
-            })
-        }
-    },
+    }
 };
 </script>
 

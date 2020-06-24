@@ -7,8 +7,8 @@ Vue.use(VueRouter)
   const routes = [
   {
     path: '/',
-    name: 'Django',
-    component: () => import('../views/django.vue')
+    name: 'UserList',
+    component: () => import('../views/UserList.vue')
   
   },
   {
