@@ -27,6 +27,8 @@ urlpatterns = [
     #api接口
     path('api/',api.api_test),
     path('get-menu-list/',api.getMenuList),
-    path('get-user-list/',api.getUserList)
+    path('get-user-list/',api.getUserList),
+     #登录
+    path('login/',api.toLogin)
 ] + static(settings.STATIC_URL,document_root=settings.STATIC_ROOT) \
     + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

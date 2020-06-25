@@ -1,6 +1,8 @@
 <template>
   <div id="home">
     <div>
+      <button>登录</button>
+      <button>注册</button>
       <div class="header">
         <h1>网页标签</h1>
         <img src="./assets/logo.png" alt />
@@ -36,6 +38,11 @@
       <hr />
     </div>
 
+    <LogiBox>
+
+
+    </LogiBox>
+
     <div class="foot">Copyright© 2020 个人练习</div>
   </div>
 </template>
@@ -44,7 +51,12 @@
 
 <script>
 import axios from 'axios'
+import LogiBox from "../src/components/LoginBox"
+
 export default {
+  components:{
+    LogiBox
+  },
   data(){
     return{
       menulist:[],

@@ -73,3 +73,10 @@ def getUserList(request):
         }
         data.append(data_item)
     return Response(data)
+
+@api_view(['POST'])
+def toLogin(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    print(username,password)
+    return Response('ok')
