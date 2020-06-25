@@ -14,20 +14,20 @@
             v-if="item.id == choosed"
             style="background: #777; color:#fff"
             >
-              <router-link to="/" style="color:#fff">{{  item.text  }}</router-link>
+              <a style="color:#fff">{{  item.text  }}</a>
             </div>
             <div 
             v-else
             style="color:#000"
             @click="chooseMenu(item.id)"
             >
-              <router-link to="/" style="color:#000">{{  item.text  }}</router-link>
+              <a style="color:#000">{{  item.text  }}</a>
             </div>
           </div>
         </div>
 
         <div class="userlist">
-          <p>Django框架</p>
+          <p>{{  choosed_text  }}</p>
 
           <hr />
           <router-view />
@@ -40,13 +40,16 @@
   </div>
 </template>
 
+
+
 <script>
 import axios from 'axios'
 export default {
   data(){
     return{
       menulist:[],
-      choosed:1
+      choosed:1,
+      choosed_text:'Dango后端'
     }
   },
   mounted() {
@@ -67,6 +70,13 @@ export default {
     chooseMenu(id){
       console.log(id)
       this.choosed = id
+      for (let i=0; i < this.menulist.length;i++){
+        if (id==this.menulist[i].id){
+          this.choosed_text = this.menulist[i].text
+        }
+      }
+      //进行ID传参跳转
+      this.$router.push({path:'/',query:{menuId:id}})
     }
   }
 }

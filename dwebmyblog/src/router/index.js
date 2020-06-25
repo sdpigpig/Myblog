@@ -12,12 +12,6 @@ Vue.use(VueRouter)
   
   },
   {
-    path: '/vuecli',
-    name: 'VueCli',
-    component: () => import('../views/vuecli.vue')
-  
-  },
-  {
     path: '/about',
     name: 'About',
     // route level code-splitting
