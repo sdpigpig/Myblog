@@ -1,5 +1,8 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+from django.contrib.auth.hashers import check_password
 from Myblog.models import Classes,Userinfo
 from Myblog.tojson import Classes_data,Userinfo_data
 import json
@@ -79,4 +82,22 @@ def toLogin(request):
     username = request.POST['username']
     password = request.POST['password']
     print(username,password)
+    #查询用户数据库
+    user = User.objects.filter(username=username)
+    if len(user)>0:
+        # auth_user = authenticate(username=username,password=password)
+        # print(auth_user)
+        # if auth_user:
+        #     return Response('登录成功')
+        # else:
+        #     return Response('密码错误')
+        user_pwd = user[0].password
+        auth_pwd = check_password(password,user_pwd)
+        print(auth_pwd)
+        if auth_pwd:
+            return Response('ok')
+        else:
+            return Response('pwderr')
+    else:
+        return Response('None!')
     return Response('ok')

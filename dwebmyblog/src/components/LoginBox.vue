@@ -22,7 +22,7 @@
 
 <script>
 import axios from "axios";
-import Qs from "qs"
+import Qs from "qs";
 export default {
   name: "LogiBox",
   data() {
@@ -36,20 +36,36 @@ export default {
       console.log(this.username, this.password);
       var username = this.username;
       var password = this.password;
-      axios({
-        url: 'http://127.0.0.1:9000/login/',
-        // type: 'json',
-        data:Qs.stringify( {
-          username,
-          password
-        }),
-        method: 'post',
-        headers:{
-            "Content-Type":"application/x-www-form-urlencoded"
-        }
-      }).then((res) => {
-        console.log(res)
-      })
+      if (username.length > 0 && password.length > 0) {
+        axios({
+          url: "http://127.0.0.1:9000/login/",
+          // type: 'json',
+          data: Qs.stringify({
+            username,
+            password
+          }),
+          method: "post",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          }
+        }).then(res => {
+          console.log(res);
+          switch (res.data) {
+            case 'None!':
+              alert('用户名不存在')
+              break;
+            case 'pwderr':
+              alert('密码错误')
+              break;
+            case 'ok':
+              alert('登录成功')
+              break;
+          }
+
+        });
+      }else{
+        alert('用户名和密码不能空')
+      }
     }
   }
 };
