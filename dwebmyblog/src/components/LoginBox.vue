@@ -57,9 +57,12 @@ export default {
             case 'pwderr':
               alert('密码错误')
               break;
-            case 'ok':
+            // case 'ok':
+            //   alert('登录成功')
+            //   break;
+            default:
+              console.log(res.data.token)
               alert('登录成功')
-              break;
           }
 
         });
