@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from django.contrib.auth.hashers import check_password
+from django.contrib.auth.hashers import check_password,make_password
 from Myblog.models import Classes,Userinfo
 from Myblog.tojson import Classes_data,Userinfo_data
 import json
@@ -107,3 +107,18 @@ def toLogin(request):
             return Response('pwderr')
     else:
         return Response('None!')
+
+@api_view(['GET','POST'])
+def toRegister(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    password2 = request.POST['password2']
+    # print(username,password,password2)
+    user = User.objects.filter(username=username)
+    if len(user)>0:
+        return Response('Same User Name')
+    else:
+        newPwd = make_password(password,username)
+        newUser = User(username=username,password=newPwd)
+        newUser.save()
+    return Response('收到注册')

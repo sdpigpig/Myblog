@@ -30,7 +30,7 @@ import axios from "axios";
 import Qs from "qs";
 export default {
   name: "LogiBox",
-  props:['target'],
+  props: ["target"],
   data() {
     return {
       username: "",
@@ -38,17 +38,52 @@ export default {
       password2: ""
     };
   },
-  mounted(){
-    console.log(this.target)
+  mounted() {
+    console.log(this.target);
   },
   methods: {
-    
-    hideSelf(){
-      this.$emit("hideBox")
+    hideSelf() {
+      this.$emit("hideBox");
     },
     //注册
-    toRegister(){
-
+    toRegister() {
+      var username = this.username;
+      var password = this.password;
+      var password2 = this.password2;
+      console.log(username, password, password2);
+      if (username.length > 0 && password.length && password2.length > 0) {
+        if (password != password2) {
+          alert("密码输入不同");
+          // return
+        } else {
+          axios({
+            url: "http://127.0.0.1:9000/register/",
+            // type: 'json',
+            data: Qs.stringify({
+              username,
+              password,
+              password2
+            }),
+            method: "post",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded"
+            }
+          }).then(res => {
+            console.log(res);
+            switch (res.data) {
+              case 'Same User Name':
+                alert('用户已存在')
+                break;
+            
+              default:
+                break;
+            }
+          
+          });
+        }
+      }else{
+        alert('密码呢？')
+      }
     },
     //登录
     toLogin() {
@@ -70,23 +105,22 @@ export default {
         }).then(res => {
           console.log(res);
           switch (res.data) {
-            case 'None!':
-              alert('用户名不存在')
+            case "None!":
+              alert("用户名不存在");
               break;
-            case 'pwderr':
-              alert('密码错误')
+            case "pwderr":
+              alert("密码错误");
               break;
             // case 'ok':
             //   alert('登录成功')
             //   break;
             default:
-              console.log(res.data.token)
-              alert('登录成功')
+              console.log(res.data.token);
+              alert("登录成功");
           }
-
         });
-      }else{
-        alert('用户名和密码不能空')
+      } else {
+        alert("用户名和密码不能空");
       }
     }
   }
@@ -105,7 +139,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background:#00000099;
+  background: #00000099;
 }
 #loginbox {
   width: 300px;

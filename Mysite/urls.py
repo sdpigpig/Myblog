@@ -29,6 +29,7 @@ urlpatterns = [
     path('get-menu-list/',api.getMenuList),
     path('get-user-list/',api.getUserList),
      #登录
-    path('login/',api.toLogin)
+    path('login/',api.toLogin),
+    path('register/',api.toRegister)
 ] + static(settings.STATIC_URL,document_root=settings.STATIC_ROOT) \
     + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
