@@ -2,21 +2,42 @@
   <div id="login" @click.self="hideSelf">
     <div id="loginbox">
       <div class="form">
-        <div class="item">
+        <div v-if="target==1 ||target==2" class="item">
           <div class="span">用户名:</div>
 
           <input v-model="username" type="text" placeholder="请输入用户名" />
         </div>
-        <div class="item">
+
+        <div v-if="target==1 ||target==2" class="item">
           <div class="span">密码:</div>
           <input v-model="password" type="text" placeholder="请输入密码" />
         </div>
+
+
         <div v-if="target==2" class="item">
           <div class="span">重复密码:</div>
           <input v-model="password2" type="text" placeholder="再次输入密码" />
         </div>
+
+        <div v-if="target==3" class="item">
+          <div class="span">网站名称：</div>
+
+          <input v-model="sitename" type="text" placeholder="请输网站名称" />
+        </div>
+        <div v-if="target==3" class="item">
+          <div class="span">图片上传：</div>
+
+          <input id="uploadlogo" @change="uploadImg($event)" type="file" style="width:50px" />
+        </div>
+        <div v-if="target==3" class="item">
+          <img :src="testLogo" alt="">
+        </div>
+
         <button v-if="target==1" @click="toLogin">登录</button>
         <button v-if="target==2" @click="toRegister">注册</button>
+        <button v-if="target==3" @click="toupload">确定</button>
+        
+        
       </div>
     </div>
   </div>
@@ -35,13 +56,62 @@ export default {
     return {
       username: "",
       password: "",
-      password2: ""
+      password2: "",
+      sitename:"",
+      testLogo:"",
     };
   },
   mounted() {
     console.log(this.target);
   },
   methods: {
+    //修改网站名称
+    toupload(){
+       var sitename = this.sitename;
+       var logo = this.testLogo;
+       console.log(sitename);
+       if (sitename.length>0 && logo.length>0 ){
+        axios({
+        url: "http://127.0.0.1:9000/upload-logo/",
+        method: "put",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        data:Qs.stringify({
+              sitename,
+              logo
+            })
+      }).then((res)=>{
+        console.log(res)
+        if (res.data == 'PUT OK'){
+          window.location.reload()
+        }
+      })
+       }else{
+         alert('没有新图片')
+       }
+    },
+
+    uploadImg(e){
+      var logo = e.target.files[0];
+      console.log(logo);
+      var Img = new FormData();
+      Img.append('logo',logo);
+      axios({
+        url: "http://127.0.0.1:9000/upload-logo/",
+        method: "post",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        data:Img
+      }).then((res)=>{
+        console.log(res)
+        if (res.data){
+          this.testLogo = "http://127.0.0.1:9000/upload/"+res.data.img
+        }
+      })
+    },
+
     hideSelf() {
       this.$emit("hideBox");
     },

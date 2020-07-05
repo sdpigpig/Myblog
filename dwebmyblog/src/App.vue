@@ -3,9 +3,10 @@
     <div>
       <button @click="showLoginRegisterBox(1)">登录</button>
       <button @click="showLoginRegisterBox(2)">注册</button>
+      <button @click="showLoginRegisterBox(3)">修改</button>
       <div class="header">
-        <h1>网页标签</h1>
-        <img src="./assets/logo.png" alt />
+        <h1>{{  siteinfo.sitename  }}</h1>
+        <img :src="siteinfo.logo" alt />
       </div>
 
       <hr />
@@ -51,7 +52,9 @@ export default {
       menulist: [],
       choosed: 1,
       choosed_text: "Dango后端",
-      boxtarget: 0
+      boxtarget: 0,
+      siteinfo:{}
+
     };
   },
   mounted() {
@@ -66,7 +69,8 @@ export default {
         method: "get"
       }).then(res => {
         console.log(res);
-        this.menulist = res.data;
+        this.menulist = res.data.menu_data;
+        this.siteinfo = res.data.siteinfo
       });
     },
     chooseMenu(id) {
