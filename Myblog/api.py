@@ -69,8 +69,14 @@ def getMenuList(request):
     }
     return Response(data)
 
-@api_view(['GET'])
+@api_view(['GET','DELETE'])
 def getUserList(request):
+    if request.method == 'DELETE':
+        user_id = request.POST['id']
+        print(user_id)
+        deleteUser = Userinfo.objects.get(id=user_id)
+        deleteUser.delete()
+        return Response('Delete OK')
     menuId = request.GET['id']
     print(menuId)
     menu = Classes.objects.get(id=menuId)

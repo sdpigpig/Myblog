@@ -1,9 +1,10 @@
 <template>
   <div id="home">
     <div>
-      <button @click="showLoginRegisterBox(1)">登录</button>
-      <button @click="showLoginRegisterBox(2)">注册</button>
-      <button @click="showLoginRegisterBox(3)">修改</button>
+      <button v-if="loginType == false" @click="showLoginRegisterBox(1)">登录</button>
+      <button v-if="loginType == false" @click="showLoginRegisterBox(2)">注册</button>
+      <button v-if="loginType">个人中心</button>
+      <button v-if="loginType" @click="showLoginRegisterBox(3)">修改</button>
       <div class="header">
         <h1>{{  siteinfo.sitename  }}</h1>
         <img :src="siteinfo.logo" alt />
@@ -53,11 +54,20 @@ export default {
       choosed: 1,
       choosed_text: "Dango后端",
       boxtarget: 0,
-      siteinfo:{}
+      siteinfo:{},
+      loginType:false
 
     };
   },
   mounted() {
+    try {
+      if(window.localStorage.getItem('token').length>0){
+        this.loginType = true;
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
     this.getMenuList();
   },
   methods: {

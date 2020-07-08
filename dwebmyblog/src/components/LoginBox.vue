@@ -186,7 +186,9 @@ export default {
             //   break;
             default:
               console.log(res.data.token);
+              window.localStorage.setItem('token',res.data.token)
               alert("登录成功");
+              window.location.reload()
           }
         });
       } else {
