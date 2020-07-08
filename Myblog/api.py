@@ -116,8 +116,16 @@ def toLogin(request):
             token = Token.objects.update_or_create(user=user[0])
             token = Token.objects.get(user=user[0])
             print(token.key)
+
+            #获取用户
+            userinfo = Userinfo.objects.get(belong_user=user[0])
             data = {
-                'token':token.key
+                'token':token.key,
+                'userinfo':{
+                    'id':userinfo.id,
+                    'nickName':userinfo.nickName,
+                    'headImg':str(userinfo.headImg)
+                }
             }
             return Response(data)
         else:
