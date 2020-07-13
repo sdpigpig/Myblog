@@ -186,10 +186,18 @@ export default {
             //   break;
             default:
               console.log(res.data.token);
-              window.localStorage.setItem('token',res.data.token)
+              window.localStorage.setItem('token',res.data.token);
               
               alert("登录成功");
-              window.location.reload()
+              //开始存储vuex中的用户信息
+              var userinfo = res.data.userinfo;
+              console.log(userinfo);
+              this.$store.commit('editUserinfo',userinfo);
+
+              if (this.$router.path != "/userinfo") {
+                this.$router.push({path:'/userinfo'})
+              }
+              // window.location.reload()
           }
         });
       } else {
